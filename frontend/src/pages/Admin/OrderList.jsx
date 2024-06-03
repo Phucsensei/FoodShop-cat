@@ -21,13 +21,13 @@ const OrderList = () => {
 
           <thead className="w-full border">
             <tr className="mb-[5rem]">
-              <th className="text-left pl-1">ITEMS</th>
-              <th className="text-left pl-1">ID</th>
-              <th className="text-left pl-1">USER</th>
-              <th className="text-left pl-1">DATA</th>
-              <th className="text-left pl-1">TOTAL</th>
-              <th className="text-left pl-1">PAID</th>
-              <th className="text-left pl-1">DELIVERED</th>
+              <th className="text-left pl-1 font-bold">ITEMS</th>
+              <th className="text-left pl-1 font-bold">ID</th>
+              <th className="text-left pl-1 font-bold">USER</th>
+              <th className="text-left pl-1 font-bold">DATE</th>
+              <th className="text-left pl-1 font-bold">TOTAL</th>
+              <th className="text-left pl-1 font-bold">PAID</th>
+              <th className="text-left pl-1 font-bold">DELIVERED</th>
               <th></th>
             </tr>
           </thead>
@@ -78,7 +78,9 @@ const OrderList = () => {
 
                 <td>
                   <Link to={`/order/${order._id}`}>
-                    <button>More</button>
+                    <button className="bg-blue-500 text-white px-3 py-1 rounded-lg">
+                      More
+                    </button>
                   </Link>
                 </td>
               </tr>

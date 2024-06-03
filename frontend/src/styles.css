@@ -1,0 +1,216 @@
+@keyframes circular-motion {
+    0% {
+            transform: rotateY(0deg);
+        }
+    
+        100% {
+            transform: rotateY(360deg);
+        }
+    }
+
+.circular-animation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    /* Chiều cao của container để đảm bảo có đủ không gian cho vòng tròn */
+}
+
+.circular-animation {
+    animation: circular-motion 5s linear infinite;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left:25%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 2rem;
+    /* Thay đổi kích thước font chữ tùy thích */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    /* Đổ bóng để chữ nổi bật hơn */
+    text-align: center;
+}
+
+.site-footer {
+    padding-top: 60px;
+    color: #a7a7a7;
+    background: #1a1f2b;
+}
+
+.site-footer .footer-title {
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.site-footer a {
+    color: inherit;
+}
+
+.site-footer .single-footer {
+    padding-bottom: 60px;
+}
+
+.site-footer .single-footer.contact-block p {
+    margin-bottom: 20px;
+    padding-right: 30px;
+    line-height: 1.45;
+}
+
+.site-footer .single-footer.contact-block p:last-child {
+    margin-bottom: 0;
+}
+
+.footer-block-2 {
+    padding: 60px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.social-icons a {
+    font-size: 24px;
+    line-height: inherit;
+    margin-right: 15px;
+}
+
+.social-icons a:hover {
+    color: #56a700;
+}
+
+.footer-list {
+    color: #a7a7a7;
+}
+
+.footer-list li {
+    margin-bottom: 15px;
+    line-height: 1.25;
+}
+
+.footer-list li a {
+    color: inherit;
+}
+
+.footer-list li a:hover {
+    color: #56a700;
+}
+
+.footer-list li:last-child {
+    margin-bottom: 0;
+}
+
+.footer-list.list-inline {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.footer-list.list-inline li {
+    margin-bottom: 10px;
+}
+
+.footer-list.list-inline li a {
+    padding-right: 10px;
+    position: relative;
+}
+
+.footer-list.list-inline li a:after {
+    position: absolute;
+    content: "";
+    background: #a7a7a7;
+    right: 5px;
+    width: 1px;
+    top: 2px;
+    bottom: 2px;
+}
+
+.footer-list.list-inline li:last-child a:after {
+    width: 0;
+}
+
+.footer-copyright {
+    text-align: center;
+    background: #10151f;
+    padding: 20px 0;
+}
+
+.footer-copyright p {
+    margin-bottom: 0;
+}
+
+.footer-copyright a {
+    color: #56a700;
+}
+
+.footer-copyright a:hover {
+    text-decoration: underline;
+}
+
+.input-box-with-icon {
+    background: #202530;
+    border: 1px solid #3a3a3b;
+    position: relative;
+}
+
+.input-box-with-icon input {
+    background: none;
+    border: none;
+    color: #f1f1f1;
+    display: block;
+    font-size: 0.929em;
+    height: 48px;
+    line-height: 46px;
+    max-width: 100%;
+    padding: 0 20px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: 100%;
+    padding-right: 46px;
+}
+
+.input-box-with-icon input:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.input-box-with-icon button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    height: 46px;
+    line-height: 46px;
+    max-width: 100%;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 46px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.input-box-with-icon button:hover {
+    color: #56a700;
+}
+
+.input-box-with-icon button i {
+    color: inherit;
+}
+
+
+

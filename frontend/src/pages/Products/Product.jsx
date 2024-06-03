@@ -3,25 +3,31 @@ import HeartIcon from "./HeartIcon";
 
 const Product = ({ product }) => {
   return (
-    <div className="w-[30rem] ml-[2rem] p-3 relative">
+    <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white">
       <div className="relative">
         <img
           src={product.image}
           alt={product.name}
-          className="w-[30rem] rounded"
+          className="w-full h-48 object-cover"
         />
-        <HeartIcon product={product} />
+        <HeartIcon product={product} className="absolute top-0 right-0 m-4" />
       </div>
 
       <div className="p-4">
-        <Link to={`/product/${product._id}`}>
-          <h2 className="flex justify-between items-center">
-            <div className="text-lg">{product.name}</div>
-            <span className="bg-pink-100 text-pink-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
-              $ {product.price}
-            </span>
+        <Link to={`/product/${product._id}`} className="block">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2 truncate">
+            {product.name}
           </h2>
         </Link>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-700">{product.price}</span>
+          <Link
+            to={`/product/${product._id}`}
+            className="inline-block px-3 py-1 text-sm font-semibold text-white bg-rose-400 rounded hover:bg-pink-700 focus:outline-none focus:bg-pink-700"
+          >
+            Read More
+          </Link>
+        </div>
       </div>
     </div>
   );

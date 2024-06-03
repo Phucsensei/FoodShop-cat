@@ -18,8 +18,8 @@ import {
 import moment from "moment";
 import HeartIcon from "./HeartIcon";
 import Ratings from "./Ratings";
-import ProductTabs from "./ProductTabs";
 import { addToCart } from "../../redux/features/cart/cartSlice";
+import ProductTabs from "./ProductTabs";
 
 const ProductDetails = () => {
   const { id: productId } = useParams();
@@ -68,7 +68,7 @@ const ProductDetails = () => {
       <div>
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[10rem]"
+          className="text-black font-semibold hover:underline ml-[10rem]"
         >
           Go Back
         </Link>
@@ -87,52 +87,52 @@ const ProductDetails = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem]"
+                className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem] rounded-lg"
               />
 
               <HeartIcon product={product} />
             </div>
 
             <div className="flex flex-col justify-between">
-              <h2 className="text-2xl font-semibold">{product.name}</h2>
-              <p className="my-4 xl:w-[35rem] lg:w-[35rem] md:w-[30rem] text-[#B0B0B0]">
-                {product.description}
+              <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
+              <p className="text-black mb-4">{product.description}</p>
+
+              <p className="text-5xl mb-4 font-extrabold text-red-600">
+                {product.price} ₫
               </p>
 
-              <p className="text-5xl my-4 font-extrabold">$ {product.price}</p>
-
-              <div className="flex items-center justify-between w-[20rem]">
+              <div className="flex justify-between items-center w-[20rem]">
                 <div className="one">
-                  <h1 className="flex items-center mb-6">
-                    <FaStore className="mr-2 text-white" /> Brand:{" "}
+                  <h1 className="flex items-center mb-4">
+                    <FaStore className="mr-2 text-black" /> Brand:{" "}
                     {product.brand}
                   </h1>
-                  <h1 className="flex items-center mb-6 w-[20rem]">
-                    <FaClock className="mr-2 text-white" /> Added:{" "}
+                  <h1 className="flex items-center mb-4 w-[20rem]">
+                    <FaClock className="mr-2 text-black" /> Added:{" "}
                     {moment(product.createAt).fromNow()}
                   </h1>
-                  <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Reviews:{" "}
+                  <h1 className="flex items-center mb-4">
+                    <FaStar className="mr-2 text-black" /> Reviews:{" "}
                     {product.numReviews}
                   </h1>
                 </div>
 
                 <div className="two">
-                  <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Ratings: {rating}
+                  <h1 className="flex items-center mb-4">
+                    <FaStar className="mr-2 text-black" /> Ratings: {rating}
                   </h1>
-                  <h1 className="flex items-center mb-6">
-                    <FaShoppingCart className="mr-2 text-white" /> Quantity:{" "}
+                  <h1 className="flex items-center mb-4">
+                    <FaShoppingCart className="mr-2 text-black" /> Quantity:{" "}
                     {product.quantity}
                   </h1>
-                  <h1 className="flex items-center mb-6 w-[10rem]">
-                    <FaBox className="mr-2 text-white" /> In Stock:{" "}
+                  <h1 className="flex items-center mb-4 w-[10rem]">
+                    <FaBox className="mr-2 text-black" /> In Stock:{" "}
                     {product.countInStock}
                   </h1>
                 </div>
               </div>
 
-              <div className="flex justify-between flex-wrap">
+              <div className="flex justify-between items-center">
                 <Ratings
                   value={product.rating}
                   text={`${product.numReviews} reviews`}
@@ -155,11 +155,11 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              <div className="btn-container">
+              <div className="btn-container mt-4">
                 <button
                   onClick={addToCartHandler}
                   disabled={product.countInStock === 0}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
+                  className="bg-blue-700 text-white py-2 px-4 rounded-lg"
                 >
                   Add To Cart
                 </button>

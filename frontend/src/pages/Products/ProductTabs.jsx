@@ -31,24 +31,24 @@ const ProductTabs = ({
     <div className="flex flex-col md:flex-row">
       <section className="mr-[5rem]">
         <div
-          className={`flex-1 p-4 cursor-pointer text-lg ${
-            activeTab === 1 ? "font-bold" : ""
-          }`}
+          className={` text-black py-3 uppercase px-4 rounded-lg hover:bg-slate-300 ${
+            activeTab === 1 ? "font-semibold" : ""
+          } cursor-pointer`}
           onClick={() => handleTabClick(1)}
         >
           Write Your Review
         </div>
         <div
-          className={`flex-1 p-4 cursor-pointer text-lg ${
-            activeTab === 2 ? "font-bold" : ""
+          className={`text-black py-3 uppercase px-4 rounded-lg hover:bg-slate-300 ${
+            activeTab === 2 ? "font-semibold" : ""
           }`}
           onClick={() => handleTabClick(2)}
         >
           All Reviews
         </div>
         <div
-          className={`flex-1 p-4 cursor-pointer text-lg ${
-            activeTab === 3 ? "font-bold" : ""
+          className={`text-black py-3 uppercase px-4 rounded-lg hover:bg-slate-300 ${
+            activeTab === 3 ? "font-semibold" : ""
           }`}
           onClick={() => handleTabClick(3)}
         >
@@ -56,14 +56,13 @@ const ProductTabs = ({
         </div>
       </section>
 
-      {/* Second Part */}
       <section>
         {activeTab === 1 && (
           <div className="mt-4">
             {userInfo ? (
               <form onSubmit={submitHandler}>
                 <div className="my-2">
-                  <label htmlFor="rating" className="block text-xl mb-2">
+                  <label htmlFor="rating" className="block text-lg mb-2">
                     Rating
                   </label>
 
@@ -84,7 +83,7 @@ const ProductTabs = ({
                 </div>
 
                 <div className="my-2">
-                  <label htmlFor="comment" className="block text-xl mb-2">
+                  <label htmlFor="comment" className="block text-lg mb-2">
                     Comment
                   </label>
 
@@ -100,7 +99,7 @@ const ProductTabs = ({
                 <button
                   type="submit"
                   disabled={loadingProductReview}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg"
+                  className="bg-blue-700 text-white py-2 px-4 rounded-lg"
                 >
                   Submit
                 </button>
@@ -123,7 +122,7 @@ const ProductTabs = ({
               {product.reviews.map((review) => (
                 <div
                   key={review._id}
-                  className="bg-[#1A1A1A] p-4 rounded-lg xl:ml-[2rem] sm:ml-[0rem] xl:w-[50rem] sm:w-[24rem] mb-5"
+                  className="bg-white p-4 rounded-lg xl:ml-[2rem] sm:ml-[0rem] xl:w-[50rem] sm:w-[24rem] mb-5"
                 >
                   <div className="flex justify-between">
                     <strong className="text-[#B0B0B0]">{review.name}</strong>
@@ -159,5 +158,4 @@ const ProductTabs = ({
     </div>
   );
 };
-
 export default ProductTabs;

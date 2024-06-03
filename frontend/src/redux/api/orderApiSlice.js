@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-import { ORDERS_URL, PAYPAL_URL } from "../constants";
+import { ORDERS_URL, PAYPAL_URL, PAYOS_URL } from "../constants"; // Đảm bảo PAYOS_URL được import
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -28,6 +28,13 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     getPaypalClientId: builder.query({
       query: () => ({
         url: PAYPAL_URL,
+      }),
+    }),
+
+    // liên kết payos
+    getPayosClientId: builder.query({
+      query: () => ({
+        url: PAYOS_URL,
       }),
     }),
 
@@ -69,11 +76,11 @@ export const {
   useGetTotalOrdersQuery,
   useGetTotalSalesQuery,
   useGetTotalSalesByDateQuery,
-  // ------------------
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useGetPayosClientIdQuery, // Đảm bảo xuất hook này
   useGetMyOrdersQuery,
   useDeliverOrderMutation,
   useGetOrdersQuery,

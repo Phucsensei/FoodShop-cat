@@ -10,6 +10,9 @@ import { useState, useEffect } from "react";
 import AdminMenu from "./AdminMenu";
 import OrderList from "./OrderList";
 import Loader from "../../components/Loader";
+import { MdOutlinePointOfSale } from "react-icons/md";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { RiCustomerService2Fill } from "react-icons/ri";
 
 const AdminDashboard = () => {
   const { data: sales, isLoading } = useGetTotalSalesQuery();
@@ -20,7 +23,7 @@ const AdminDashboard = () => {
   const [state, setState] = useState({
     options: {
       chart: {
-        type: "line",
+        type: "area",
       },
       tooltip: {
         theme: "dark",
@@ -94,34 +97,67 @@ const AdminDashboard = () => {
 
       <section className="xl:ml-[4rem] md:ml-[0rem]">
         <div className="w-[80%] flex justify-around flex-wrap">
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
-              $
+          <div
+            className="rounded-lg bg-yellow-200 p-5 w-[25rem] mt-5"
+            style={{ fontFamily: "Arial, sans-serif" }}
+          >
+            <div className="font-bold rounded-full w-[3rem]  text-center p-3">
+              <MdOutlinePointOfSale size={37} />
             </div>
 
-            <p className="mt-5">Sales</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : sales.totalSales.toFixed(2)}
+            <p
+              className="mt-5"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              Sales
+            </p>
+            <h1
+              className="text-xl font-bold"
+              style={{ fontFamily: "Roboto, sans-serif" }}
+            >
+              {isLoading ? <Loader /> : sales.totalSales.toFixed(2)} ₫
             </h1>
           </div>
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
-              $
+          <div
+            className="rounded-lg bg-violet-400 p-5 w-[25rem] mt-5"
+            style={{ fontFamily: "Arial, sans-serif" }}
+          >
+            <div className="font-bold rounded-full w-[3rem] text-center p-3">
+              <RiCustomerService2Fill size={37} />
             </div>
 
-            <p className="mt-5">Customers</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : customers?.length}
+            <p
+              className="mt-5"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              Customers
+            </p>
+            <h1
+              className="text-xl font-bold uppercase"
+              style={{ fontFamily: "Roboto, sans-serif" }}
+            >
+              {isLoading ? <Loader /> : customers?.length} customers
             </h1>
           </div>
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
-              $
+          <div
+            className="rounded-lg bg-orange-300 p-5 w-[25rem] mt-5"
+            style={{ fontFamily: "Arial, sans-serif" }}
+          >
+            <div className="font-bold rounded-full w-[3rem]  text-center p-3">
+              <AiOutlineShoppingCart size={37} />
             </div>
 
-            <p className="mt-5">All Orders</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : orders?.totalOrders}
+            <p
+              className="mt-5"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              All Orders
+            </p>
+            <h1
+              className="text-xl font-bold uppercase"
+              style={{ fontFamily: "Roboto, sans-serif" }}
+            >
+              {isLoading ? <Loader /> : orders?.totalOrders} Order
             </h1>
           </div>
         </div>
@@ -130,7 +166,7 @@ const AdminDashboard = () => {
           <Chart
             options={state.options}
             series={state.series}
-            type="bar"
+            type="area"
             width="70%"
           />
         </div>

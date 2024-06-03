@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Header from "../components/Header";
 import Product from "./Products/Product";
+import "../styles.css";
 
 const Home = () => {
   const { keyword } = useParams();
@@ -21,26 +22,23 @@ const Home = () => {
       ) : (
         <>
           <div className="flex justify-between items-center">
-            <h1 className="ml-[20rem] mt-[10rem] text-[3rem]">
+            <h1
+              className="ml-40 mt-40 text-3xl font-bold text-gray-800"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
               Special Products
             </h1>
-
             <Link
               to="/shop"
-              className="bg-pink-600 font-bold rounded-full py-2 px-10 mr-[18rem] mt-[10rem]"
+              className="bg-rose-400 font-bold rounded-full py-2 px-10 mr-[10rem] mt-[10rem] text-white"
             >
               Shop
             </Link>
           </div>
-
-          <div>
-            <div className="flex justify-center flex-wrap mt-[2rem]">
-              {data.products.map((product) => (
-                <div key={product._id}>
-                  <Product product={product} />
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-5 gap-8 p-8">
+            {data.products.map((product) => (
+              <Product key={product._id} product={product} />
+            ))}
           </div>
         </>
       )}

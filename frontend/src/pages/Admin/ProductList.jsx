@@ -71,7 +71,9 @@ const ProductList = () => {
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
         <div className="md:w-3/4 p-3">
-          <div className="h-12">Create Product</div>
+          <div className="text-4xl font-semibold mb-4 italic">
+            Create Product
+          </div>
 
           {imageUrl && (
             <div className="text-center">
@@ -83,8 +85,8 @@ const ProductList = () => {
             </div>
           )}
 
-          <div className="mb-3">
-            <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+          <div className="mb-8">
+            <label className=" bg-slate-300 border text-black px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
               {image ? image.name : "Upload Image"}
 
               <input
@@ -92,27 +94,33 @@ const ProductList = () => {
                 name="image"
                 accept="image/*"
                 onChange={uploadFileHandler}
-                className={!image ? "hidden" : "text-white"}
+                className={!image ? "hidden" : "text-"}
               />
             </label>
           </div>
 
-          <div className="p-3">
+          <div className="p-9">
             <div className="flex flex-wrap">
               <div className="one">
-                <label htmlFor="name">Name</label> <br />
+                <label htmlFor="name" className="text-red-600">
+                  Name
+                </label>{" "}
+                <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-8 w-[30rem] border rounded-lg bg-slate-300 text-black"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="two ml-10 ">
-                <label htmlFor="name block">Price</label> <br />
+                <label htmlFor="name block" className="text-red-600">
+                  Price
+                </label>{" "}
+                <br />
                 <input
                   type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-8 w-[30rem] border rounded-lg bg-slate-300 text-black"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -120,53 +128,66 @@ const ProductList = () => {
             </div>
             <div className="flex flex-wrap">
               <div className="one">
-                <label htmlFor="name block">Quantity</label> <br />
+                <label htmlFor="name block" className="text-red-600">
+                  Quantity
+                </label>{" "}
+                <br />
                 <input
                   type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-8 w-[30rem] border rounded-lg bg-slate-300 text-black"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
               </div>
               <div className="two ml-10 ">
-                <label htmlFor="name block">Brand</label> <br />
+                <label htmlFor="name block" className="text-red-600">
+                  Brand
+                </label>{" "}
+                <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-8 w-[30rem] border rounded-lg bg-slate-300 text-black"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
               </div>
             </div>
 
-            <label htmlFor="" className="my-5">
+            <label htmlFor="" className="my-5 text-red-600">
               Description
             </label>
             <textarea
               type="text"
-              className="p-2 mb-3 bg-[#101011] border rounded-lg w-[95%] text-white"
+              className="p-2 mb-8 bg-slate-300 border rounded-lg w-[95%] text-black"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
 
             <div className="flex justify-between">
               <div>
-                <label htmlFor="name block">Count In Stock</label> <br />
+                <label htmlFor="name block" className="text-red-600">
+                  Count In Stock
+                </label>{" "}
+                <br />
                 <input
                   type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-8 w-[30rem] border rounded-lg bg-slate-300 text-black"
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
               </div>
 
-              <div>
-                <label htmlFor="">Category</label> <br />
+              <div className="mr-11">
+                <label htmlFor="" className="text-red-600">
+                  Category
+                </label>{" "}
+                <br />
                 <select
                   placeholder="Choose Category"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
+                  className="p-4 mb-8 w-[30rem] border rounded-lg bg-slate-300 text-black"
                   onChange={(e) => setCategory(e.target.value)}
                 >
+                  <option value="">Select Category</option>{" "}
                   {categories?.map((c) => (
                     <option key={c._id} value={c._id}>
                       {c.name}
@@ -178,7 +199,7 @@ const ProductList = () => {
 
             <button
               onClick={handleSubmit}
-              className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-600"
+              className="text-white py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-600"
             >
               Submit
             </button>

@@ -35,7 +35,12 @@ import Order from "./pages/Orders/Order.jsx";
 import OrderList from "./pages/Admin/OrderList.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
-
+import UserOrder from "./pages/User/UserOrder.jsx";
+import Calo from "./pages/Products/calo";
+import BlogPageSection from "./pages/Products/blog.jsx";
+import BlogPage from "./pages/Products/detailblog.jsx";
+import BlogPage1 from "./pages/Products/detailblog1.jsx";
+import BlogPage2 from "./pages/Products/detailblog2.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -45,8 +50,13 @@ const router = createBrowserRouter(
       <Route path="/favorite" element={<Favorites />} />
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/calo" element={<Calo />} />
+      <Route path="/blog" element={<BlogPageSection />} />
+      <Route path="/blogpage" element={<BlogPage />} />
+      <Route path="/blogpage1" element={<BlogPage1 />} />
+      <Route path="/blogpage2" element={<BlogPage2 />} />
       <Route path="/shop" element={<Shop />} />
-
+      <Route path="/user-order" element={<UserOrder />} />
       {/* Registered users */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />

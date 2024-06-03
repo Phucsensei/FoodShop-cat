@@ -8,8 +8,8 @@ import {
   useUpdateUserMutation,
 } from "../../redux/api/usersApiSlice";
 import { toast } from "react-toastify";
-// ⚠️⚠️⚠️ don't forget this ⚠️⚠️⚠️⚠️
-// import AdminMenu from "./AdminMenu";
+
+import AdminMenu from "./AdminMenu";
 
 const UserList = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
@@ -27,7 +27,7 @@ const UserList = () => {
   }, [refetch]);
 
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure")) {
+    if (window.confirm("Are you sure?")) {
       try {
         await deleteUser(id);
         refetch();
@@ -68,14 +68,14 @@ const UserList = () => {
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">
-          {/* <AdminMenu /> */}
+          <AdminMenu />
           <table className="w-full md:w-4/5 mx-auto">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left">ID</th>
-                <th className="px-4 py-2 text-left">NAME</th>
-                <th className="px-4 py-2 text-left">EMAIL</th>
-                <th className="px-4 py-2 text-left">ADMIN</th>
+                <th className="px-4 py-2 text-left font-bold">ID</th>
+                <th className="px-4 py-2 text-left font-bold">NAME</th>
+                <th className="px-4 py-2 text-left font-bold">EMAIL</th>
+                <th className="px-4 py-2 text-left font-bold">ADMIN</th>
                 <th className="px-4 py-2"></th>
               </tr>
             </thead>
@@ -107,7 +107,7 @@ const UserList = () => {
                             toggleEdit(user._id, user.username, user.email)
                           }
                         >
-                          <FaEdit className="ml-[1rem]" />
+                          <FaEdit className="ml-2" />
                         </button>
                       </div>
                     )}
@@ -136,7 +136,7 @@ const UserList = () => {
                             toggleEdit(user._id, user.name, user.email)
                           }
                         >
-                          <FaEdit className="ml-[1rem]" />
+                          <FaEdit className="ml-2" />
                         </button>
                       </div>
                     )}

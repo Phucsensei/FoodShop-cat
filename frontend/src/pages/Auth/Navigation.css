@@ -34,3 +34,52 @@
   display: none;
   transition: opacity 0.2s ease-in-out; /* Add opacity transition */
 }
+
+
+/* Trong file CSS của bạn */
+.toggle-button {
+  background-color: #ffffff;
+  /* Màu nền của nút */
+  border-radius: 50%;
+  /* Để làm cho nút có hình tròn */
+  padding: 10px;
+  /* Khoảng cách giữa biểu tượng và viền của nút */
+  transition: background-color 0.3s ease;
+  /* Hiệu ứng chuyển đổi màu nền */
+}
+
+.toggle-button:hover {
+  background-color: #f0f0f0;
+  /* Màu nền khi hover */
+}
+
+.navigation-bar {
+  position: fixed;
+  /* Đặt vị trí của thanh điều hướng */
+  top: 0;
+  /* Đặt vị trí top là 0 để nằm ở trên cùng của trang */
+  left: 0;
+  /* Đặt vị trí left là 0 để nằm ở góc trái */
+  width: 100%;
+  /* Chiều rộng của thanh điều hướng là 100% của trang */
+  background-color: #333;
+  /* Màu nền của thanh điều hướng */
+  color: #fff;
+  /* Màu chữ của các mục trong thanh điều hướng */
+  padding: 10px 20px;
+  /* Khoảng cách giữa biên và nội dung của thanh điều hướng */
+  z-index: 1000;
+  /* Đảm bảo thanh điều hướng hiển thị trên các phần tử khác */
+}
+
+
+.navigation-icons {
+  display: flex;
+  /* Sử dụng Flexbox để xếp các biểu tượng theo chiều ngang */
+  flex-direction: row;
+  /* Sắp xếp các biểu tượng từ trái sang phải */
+  justify-content: space-between;
+  /* Cách đều các biểu tượng ra hai bên */
+  align-items: center;
+  /* Căn chỉnh các biểu tượng theo trục dọc */
+}

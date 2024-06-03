@@ -48,64 +48,68 @@ const Profile = () => {
   return (
     <div className="container mx-auto p-4 mt-[10rem]">
       <div className="flex justify-center align-center md:flex md:space-x-4">
-        <div className="md:w-1/3">
-          <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
+        <div className="md:w-1/2 ">
+          <h2 className="text-4xl font-semibold text-center my-7 mb-4">
+            Update Profile
+          </h2>
           <form onSubmit={submitHandler}>
             <div className="mb-4">
-              <label className="block text-white mb-2">Name</label>
+              <label className="block  text-red-600 mb-3 ">Name</label>
               <input
                 type="text"
                 placeholder="Enter name"
-                className="form-input p-4 rounded-sm w-full"
+                className="form-input p-4 rounded-lg w-full  bg-slate-300"
                 value={username}
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-white mb-2">Email Address</label>
+              <label className="block  text-red-600 mb-3">Email Address</label>
               <input
                 type="email"
                 placeholder="Enter email"
-                className="form-input p-4 rounded-sm w-full"
+                className="form-input p-4 rounded-lg w-full  bg-slate-300"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-white mb-2">Password</label>
+              <label className="block  text-red-600 mb-3">Password</label>
               <input
                 type="password"
                 placeholder="Enter password"
-                className="form-input p-4 rounded-sm w-full"
+                className="form-input p-4 rounded-lg w-full  bg-slate-300"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-white mb-2">Confirm Password</label>
+              <label className="block  text-red-600 mb-3">
+                Confirm Password
+              </label>
               <input
                 type="password"
                 placeholder="Confirm password"
-                className="form-input p-4 rounded-sm w-full"
+                className="form-input p-4 rounded-lg w-full  bg-slate-300"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex flex-col gap-4 justify-between">
               <button
                 type="submit"
-                className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600"
+                className="bg-green-500 text-white py-3 uppercase px-4 rounded-lg hover:bg-slate-300"
               >
                 Update
               </button>
 
               <Link
-                to="/user-orders"
-                className="bg-pink-600 text-white py-2 px-4 rounded hover:bg-pink-700"
+                to="/user-order"
+                className="bg-red-600 text-white text-center py-3 uppercase px-4 rounded-lg hover:bg-slate-300"
               >
                 My Orders
               </Link>

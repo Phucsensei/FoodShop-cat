@@ -23,10 +23,10 @@ const AdminProductUpdate = () => {
     productData?.description || ""
   );
   const [price, setPrice] = useState(productData?.price || "");
-  const [category, setCategory] = useState(productData?.category || "");
+  const [category, setCategory] = useState(productData?.category?._id || ""); // Change here
   const [quantity, setQuantity] = useState(productData?.quantity || "");
   const [brand, setBrand] = useState(productData?.brand || "");
-  const [stock, setStock] = useState(productData?.countInStock);
+  const [stock, setStock] = useState(productData?.countInStock || ""); // Ensure this is set
 
   // hook
   const navigate = useNavigate();
@@ -47,10 +47,11 @@ const AdminProductUpdate = () => {
       setName(productData.name);
       setDescription(productData.description);
       setPrice(productData.price);
-      setCategory(productData.category?._id);
+      setCategory(productData.category?._id || ""); // Ensure this is set
       setQuantity(productData.quantity);
       setBrand(productData.brand);
       setImage(productData.image);
+      setStock(productData.countInStock || ""); // Ensure this is set
     }
   }, [productData]);
 
@@ -65,7 +66,7 @@ const AdminProductUpdate = () => {
       });
       setImage(res.image);
     } catch (err) {
-      toast.success("Item added successfully", {
+      toast.error("Image upload failed. Try again.", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
@@ -74,6 +75,13 @@ const AdminProductUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!category) {
+      toast.error("Please select a category", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("image", image);
@@ -94,7 +102,7 @@ const AdminProductUpdate = () => {
           autoClose: 2000,
         });
       } else {
-        toast.success(`Product successfully updated`, {
+        toast.success("Product successfully updated", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
@@ -133,11 +141,13 @@ const AdminProductUpdate = () => {
 
   return (
     <>
-      <div className="container  xl:mx-[9rem] sm:mx-[0]">
+      <div className="container xl:mx-[9rem] sm:mx-[0]">
         <div className="flex flex-col md:flex-row">
           <AdminMenu />
           <div className="md:w-3/4 p-3">
-            <div className="h-12">Update / Delete Product</div>
+            <div className="text-4xl font-semibold mb-4 italic">
+              Update / Delete Product
+            </div>
 
             {image && (
               <div className="text-center">
@@ -150,14 +160,14 @@ const AdminProductUpdate = () => {
             )}
 
             <div className="mb-3">
-              <label className="text-white  py-2 px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
+              <label className="text-black py-2 px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
                 {image ? image.name : "Upload image"}
                 <input
                   type="file"
                   name="image"
                   accept="image/*"
                   onChange={uploadFileHandler}
-                  className="text-white"
+                  className="text-black"
                 />
               </label>
             </div>
@@ -165,20 +175,26 @@ const AdminProductUpdate = () => {
             <div className="p-3">
               <div className="flex flex-wrap">
                 <div className="one">
-                  <label htmlFor="name">Name</label> <br />
+                  <label htmlFor="name" className="text-red-600">
+                    Name
+                  </label>{" "}
+                  <br />
                   <input
                     type="text"
-                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white mr-[5rem]"
+                    className="bg-slate-300 p-4 mb-3 w-[30rem] border rounded-lg text-black mr-[5rem]"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
 
                 <div className="two">
-                  <label htmlFor="name block">Price</label> <br />
+                  <label htmlFor="price" className="text-red-600">
+                    Price
+                  </label>{" "}
+                  <br />
                   <input
                     type="number"
-                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white "
+                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-slate-300 text-black"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                   />
@@ -187,54 +203,69 @@ const AdminProductUpdate = () => {
 
               <div className="flex flex-wrap">
                 <div>
-                  <label htmlFor="name block">Quantity</label> <br />
+                  <label htmlFor="quantity" className="text-red-600">
+                    Quantity
+                  </label>{" "}
+                  <br />
                   <input
                     type="number"
                     min="1"
-                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white mr-[5rem]"
+                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-slate-300 text-black mr-[5rem]"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label htmlFor="name block">Brand</label> <br />
+                  <label htmlFor="brand" className="text-red-600">
+                    Brand
+                  </label>{" "}
+                  <br />
                   <input
                     type="text"
-                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white "
+                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-slate-300 text-black"
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                   />
                 </div>
               </div>
 
-              <label htmlFor="" className="my-5">
+              <label htmlFor="description" className="my-5 text-red-600">
                 Description
               </label>
               <textarea
-                type="text"
-                className="p-2 mb-3 bg-[#101011]  border rounded-lg w-[95%] text-white"
+                id="description"
+                className="p-10 mb-3 bg-slate-300 border rounded-lg w-[95%] text-black whitespace-pre-wrap"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
 
               <div className="flex justify-between">
                 <div>
-                  <label htmlFor="name block">Count In Stock</label> <br />
+                  <label htmlFor="stock" className="text-red-600">
+                    Count In Stock
+                  </label>{" "}
+                  <br />
                   <input
-                    type="text"
-                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white "
+                    type="number"
+                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-slate-300 text-black"
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="">Category</label> <br />
+                  <label htmlFor="category" className="text-red-600">
+                    Category
+                  </label>{" "}
+                  <br />
                   <select
-                    placeholder="Choose Category"
-                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white mr-[5rem]"
+                    id="category"
+                    className="p-4 mb-3 w-[30rem] border rounded-lg bg-slate-300 text-black mr-[5rem]"
+                    value={category} // Ensure value is set
                     onChange={(e) => setCategory(e.target.value)}
                   >
+                    <option value="">Select Category</option>{" "}
+                    {/* Add default option */}
                     {categories?.map((c) => (
                       <option key={c._id} value={c._id}>
                         {c.name}
@@ -244,16 +275,16 @@ const AdminProductUpdate = () => {
                 </div>
               </div>
 
-              <div className="">
+              <div>
                 <button
                   onClick={handleSubmit}
-                  className="py-4 px-10 mt-5 rounded-lg text-lg font-bold  bg-green-600 mr-6"
+                  className="py-4 px-10 mt-5 rounded-lg text-lg text-white font-bold bg-green-600 mr-6"
                 >
                   Update
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="py-4 px-10 mt-5 rounded-lg text-lg font-bold  bg-pink-600"
+                  className="py-4 px-10 mt-5 rounded-lg text-lg text-white font-bold bg-pink-600"
                 >
                   Delete
                 </button>
