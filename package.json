@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run frontend\" \"npm run backend"
   },
   "keywords": [],
-  "author": "HuXn WebDev",
+  "author": "Tran Chi Phuc",
   "license": "ISC",
   "dependencies": {
     "@payos/node": "^1.0.6",
