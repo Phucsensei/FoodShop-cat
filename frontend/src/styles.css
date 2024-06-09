@@ -1,4 +1,4 @@
-@keyframes circular-motion {
+/* @keyframes circular-motion {
     0% {
             transform: rotateY(0deg);
         }
@@ -6,7 +6,7 @@
         100% {
             transform: rotateY(360deg);
         }
-    }
+    } */
 
 .circular-animation-container {
     display: flex;

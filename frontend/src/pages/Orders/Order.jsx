@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
+import { format } from "date-fns";
 import {
   useDeliverOrderMutation,
   useGetOrderDetailsQuery,
@@ -15,6 +16,9 @@ import {
 
 const Order = () => {
   const { id: orderId } = useParams();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const status = query.get("status");
 
   const {
     data: order,
@@ -42,6 +46,8 @@ const Order = () => {
     error: errorPayos,
   } = useGetPayosClientIdQuery();
 
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
+
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
@@ -65,10 +71,15 @@ const Order = () => {
 
   useEffect(() => {
     if (payos && payos.clientId) {
-      // Xử lý hoặc lưu trữ clientId của PayOS nếu cần
       console.log("PayOS Client ID:", payos.clientId);
     }
   }, [payos]);
+
+  useEffect(() => {
+    if (status === "PAID") {
+      handleQrPaymentSuccess();
+    }
+  }, [status]);
 
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
@@ -76,6 +87,7 @@ const Order = () => {
         await payOrder({ orderId, details });
         refetch();
         toast.success("Order is paid");
+        setPaymentCompleted(true);
       } catch (error) {
         toast.error(error?.data?.message || error.message);
       }
@@ -101,9 +113,13 @@ const Order = () => {
     refetch();
   };
 
-  // Hàm tạo liên kết thanh toán bằng QR code
   const createPaymentLink = async () => {
     try {
+      let totalPrice = Math.round(order.totalPrice * 1000);
+      if (totalPrice <= 0) {
+        console.error("Invalid totalPrice");
+        return;
+      }
       const response = await fetch(
         "http://localhost:5000/api/create-payment-link",
         {
@@ -111,21 +127,29 @@ const Order = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            // Dữ liệu cần gửi lên server, nếu có
-          }),
+          body: JSON.stringify({ totalPrice, orderId }), // Gửi orderId
         }
       );
 
       const data = await response.json();
       if (response.ok) {
-        console.log("Payment link:", data);
         window.location.href = data.checkoutUrl;
       } else {
         console.error("Error creating payment link:", data.error);
       }
     } catch (error) {
       console.error("Error creating payment link:", error);
+    }
+  };
+
+  const handleQrPaymentSuccess = async () => {
+    try {
+      await payOrder({ orderId });
+      refetch();
+      toast.success("Order is paid");
+      setPaymentCompleted(true);
+    } catch (error) {
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -208,70 +232,67 @@ const Order = () => {
             {order.paymentMethod}
           </p>
           {order.isPaid ? (
-            <Message variant="success">Paid on {order.paidAt}</Message>
+            <Message variant="success">
+              Paid on {format(new Date(order.paidAt), "yyyy-MM-dd HH:mm:ss")}
+            </Message>
           ) : (
             <Message variant="danger">Not paid</Message>
           )}
         </div>
 
-        <div className="border p-4 rounded-lg shadow-md mb-4 bg-white">
-          <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          <div className="flex justify-between mb-2">
-            <span>Items:</span>
-            <span>{order.itemsPrice} ₫</span>
-          </div>
-          <div className="flex justify-between mb-2">
-            <span>Shipping:</span>
-            <span>{order.shippingPrice} ₫</span>
-          </div>
-          <div className="flex justify-between mb-2">
-            <span>Tax:</span>
-            <span>{order.taxPrice} ₫</span>
-          </div>
-          <div className="flex justify-between mb-2">
-            <span>Total:</span>
-            <span>{order.totalPrice} ₫</span>
-          </div>
-
-          {!order.isPaid && (
-            <div>
-              {loadingPay && <Loader />}
-              {isPending ? (
-                <Loader />
-              ) : (
-                <div>
-                  <PayPalButtons
-                    createOrder={createOrder}
-                    onApprove={onApprove}
-                    onError={onError}
-                  />
-                </div>
-              )}
+        {!paymentCompleted && !order.isPaid && (
+          <div className="border p-4 rounded-lg shadow-md mb-4 bg-white">
+            <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+            <div className="flex justify-between mb-2">
+              <span>Items:</span>
+              <span>{order.itemsPrice} ₫</span>
             </div>
-          )}
+            <div className="flex justify-between mb-2">
+              <span>Shipping:</span>
+              <span>{order.shippingPrice} ₫</span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span>Tax:</span>
+              <span>{order.taxPrice} ₫</span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span>Total:</span>
+              <span>{order.totalPrice} ₫</span>
+            </div>
 
+            {loadingPay && <Loader />}
+            {isPending ? (
+              <Loader />
+            ) : (
+              <div>
+                <PayPalButtons
+                  createOrder={createOrder}
+                  onApprove={onApprove}
+                  onError={onError}
+                />
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="bg-blue-500 text-white w-full py-2 mt-4 rounded-lg"
+              onClick={createPaymentLink}
+            >
+              Quét mã QR
+            </button>
+          </div>
+        )}
+
+        {loadingDeliver && <Loader />}
+        {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
           <button
             type="button"
-            className="bg-blue-500 text-white w-full py-2 mt-4 rounded-lg"
-            onClick={createPaymentLink}
+            className="bg-pink-500 text-white w-full py-2 mt-4 rounded-lg"
+            onClick={deliverHandler}
           >
-            Quét mã QR
+            Mark As Delivered
           </button>
-
-          {loadingDeliver && <Loader />}
-          {userInfo &&
-            userInfo.isAdmin &&
-            order.isPaid &&
-            !order.isDelivered && (
-              <button
-                type="button"
-                className="bg-pink-500 text-white w-full py-2 mt-4 rounded-lg"
-                onClick={deliverHandler}
-              >
-                Mark As Delivered
-              </button>
-            )}
-        </div>
+        )}
       </div>
     </div>
   );

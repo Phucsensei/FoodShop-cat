@@ -20,7 +20,7 @@ const Product = ({ product }) => {
           </h2>
         </Link>
         <div className="flex justify-between items-center">
-          <span className="text-gray-700">{product.price}</span>
+          <span className="text-red-500">{product.price} ₫</span>
           <Link
             to={`/product/${product._id}`}
             className="inline-block px-3 py-1 text-sm font-semibold text-white bg-rose-400 rounded hover:bg-pink-700 focus:outline-none focus:bg-pink-700"

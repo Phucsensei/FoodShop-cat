@@ -39,7 +39,7 @@ const ProductCard = ({ p }) => {
           {p?.name}
         </h5>
 
-        <p className="text-red-600 text-lg font-semibold mb-2 flex items-center">
+        <p className="text-blue-500 text-lg font-semibold mb-2 flex items-center">
           <FaRegMoneyBillAlt className="mr-1" />
           {p?.price?.toLocaleString("vi-VN", {
             style: "currency",
@@ -54,7 +54,7 @@ const ProductCard = ({ p }) => {
         <div className="flex justify-between items-center">
           <Link
             to={`/product/${p._id}`}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-zinc-500 rounded-lg hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800"
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800"
           >
             Read More
             <svg

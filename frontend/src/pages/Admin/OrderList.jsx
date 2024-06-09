@@ -47,7 +47,9 @@ const OrderList = () => {
                 <td>{order.user ? order.user.username : "N/A"}</td>
 
                 <td>
-                  {order.createdAt ? order.createdAt.substring(0, 10) : "N/A"}
+                  {order.createdAt
+                    ? new Date(order.createdAt).toLocaleDateString()
+                    : "N/A"}
                 </td>
 
                 <td>$ {order.totalPrice}</td>

@@ -49,8 +49,8 @@ const Cart = () => {
                       {item.name}
                     </Link>
 
-                    <div className="mt-2 text-white">{item.brand}</div>
-                    <div className="mt-2 text-white font-bold">
+                    <div className="mt-2 text-black">{item.brand}</div>
+                    <div className="mt-2 text-red-600 font-bold">
                       {item.price}₫
                     </div>
                   </div>
@@ -90,14 +90,14 @@ const Cart = () => {
 
                   <div className="text-2xl font-bold">
                     {" "}
-                    ₫
                     {cartItems
                       .reduce((acc, item) => acc + item.qty * item.price, 0)
                       .toFixed(2)}
+                    ₫
                   </div>
 
                   <button
-                    className="bg-pink-500 mt-4 py-2 px-4 rounded-full text-lg w-full"
+                    className="bg-blue-400 mt-4 py-2 px-4 rounded-full text-lg w-full"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >

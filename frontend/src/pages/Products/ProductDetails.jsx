@@ -63,6 +63,15 @@ const ProductDetails = () => {
     navigate("/cart");
   };
 
+  // Chuyển đổi mô tả thành các dòng riêng biệt
+  const formattedDescription = product?.description
+    ?.split("-")
+    .map((item, index) => (
+      <p key={index} className="mb-2">
+        {item.trim()}
+      </p>
+    ));
+
   return (
     <>
       <div>
@@ -95,7 +104,9 @@ const ProductDetails = () => {
 
             <div className="flex flex-col justify-between">
               <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
-              <p className="text-black mb-4">{product.description}</p>
+
+              {/* Hiển thị mô tả đã được định dạng */}
+              <div className="text-black mb-4">{formattedDescription}</div>
 
               <p className="text-5xl mb-4 font-extrabold text-red-600">
                 {product.price} ₫

@@ -85,7 +85,7 @@ const Shop = () => {
       <div className="container mx-auto">
         <div className="flex md:flex-row">
           <div className="bg-white p-3 mt-2 mb-2">
-            <h2 className="h4 text-center text-white py-2 bg-zinc-700 rounded-full mb-2">
+            <h2 className="h4 text-center text-white py-2 bg-blue-500 rounded-full mb-2">
               Filter by Categories
             </h2>
 
@@ -111,7 +111,7 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center text-white py-2 bg-zinc-700 rounded-full mb-2">
+            <h2 className="h4 text-center text-white py-2 bg-blue-500 rounded-full mb-2">
               Filter by Brands
             </h2>
 
@@ -138,7 +138,7 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center text-white py-2 bg-zinc-700 rounded-full mb-2">
+            <h2 className="h4 text-center text-white py-2 bg-blue-500 rounded-full mb-2">
               Filer by Price
             </h2>
 
@@ -154,7 +154,7 @@ const Shop = () => {
 
             <div className="p-5 pt-0">
               <button
-                className="bg-neutral-900 text-white py-2 w-full uppercase px-4 rounded-lg hover:bg-slate-300"
+                className="bg-blue-500 text-white py-2 w-full uppercase px-4 rounded-lg hover:bg-slate-300"
                 onClick={() => window.location.reload()}
               >
                 Reset
