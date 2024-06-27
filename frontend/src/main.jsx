@@ -57,6 +57,7 @@ const router = createBrowserRouter(
       <Route path="/blogpage2" element={<BlogPage2 />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/user-order" element={<UserOrder />} />
+
       {/* Registered users */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
