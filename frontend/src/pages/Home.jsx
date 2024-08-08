@@ -21,18 +21,15 @@ const Home = () => {
         </Message>
       ) : (
         <>
-          <div className="flex justify-between items-center">
-            <h1
-              className="ml-40 mt-40 text-3xl font-bold text-gray-800"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
-              Special Products
+          <div className="flex justify-between items-center border-b-2 border-gray-200 pb-4">
+            <h1 className="ml-40 mt-40 text-3xl font-bold text-gray-800">
+              Sản Phẩm Bán Chạy
             </h1>
             <Link
               to="/shop"
               className="bg-rose-400 font-bold rounded-full py-2 px-10 mr-[10rem] mt-[10rem] text-white"
             >
-              Shop
+              Xem tất cả sản phẩm
             </Link>
           </div>
           <div className="grid grid-cols-5 gap-8 p-8">

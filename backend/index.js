@@ -3,6 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
+// Utils
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -10,7 +12,7 @@ import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import payos from "./utils/payos.js";
-import Order from "./models/orderModel.js";
+import Order from "./models/orderModel.js"; // Import Order model
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -38,25 +40,26 @@ app.get("/api/config/payos", (req, res) => {
   res.send({ clientId: process.env.PAYOS_CLIENT_ID });
 });
 
+// Route tạo liên kết thanh toán
 app.post("/api/create-payment-link", async (req, res) => {
-  let { totalPrice, orderId } = req.body;
-  totalPrice = Math.round(totalPrice);
-  console.log("Received totalPrice: ", totalPrice);
+  let { totalPrice, orderId } = req.body; // Lấy totalPrice và orderId từ body của yêu cầu
+  totalPrice = Math.round(totalPrice); // Chuyển đổi totalPrice thành số nguyên
+  console.log("Received totalPrice: ", totalPrice); // Kiểm tra giá trị totalPrice
 
   if (totalPrice <= 0) {
     return res.status(400).json({ error: "Invalid totalPrice" });
   }
 
-  const YOUR_DOMAIN = "http://localhost:5173";
-  const returnUrl = `${YOUR_DOMAIN}/order/${orderId}`;
-  const cancelUrl = `${YOUR_DOMAIN}/shop`;
+  const YOUR_DOMAIN = "http://localhost:5173"; // Địa chỉ trang cần chuyển hướng đến sau khi hủy thanh toán
+  const returnUrl = `${YOUR_DOMAIN}/order/${orderId}`; // Đường dẫn sau khi thanh toán thành công
+  const cancelUrl = `${YOUR_DOMAIN}/shop`; // Đường dẫn sau khi hủy thanh toán
 
   const body = {
     orderCode: Number(String(Date.now()).slice(-6)),
-    amount: totalPrice,
+    amount: totalPrice, // Sử dụng totalPrice thực tế
     description: "Thanh toan don hang",
-    returnUrl,
-    cancelUrl,
+    returnUrl: returnUrl,
+    cancelUrl: cancelUrl,
   };
 
   try {

@@ -1,0 +1,20 @@
+.button-with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-with-icon:hover {
+    background-color: #4a90e2;
+    /* Change color on hover */
+    transform: scale(1.05);
+    /* Slightly enlarge the button */
+}
+
+.button-with-icon:active {
+    transform: scale(0.95);
+    /* Slightly shrink the button when clicked */
+}
+
+

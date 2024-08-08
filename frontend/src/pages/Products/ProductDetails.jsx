@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
+  useGetTopProductsQuery,
 } from "../../redux/api/productApiSlice";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -14,12 +15,18 @@ import {
   FaShoppingCart,
   FaStar,
   FaStore,
+  FaCartPlus,
+  FaHeart,
+  FaDollarSign,
 } from "react-icons/fa";
 import moment from "moment";
 import HeartIcon from "./HeartIcon";
 import Ratings from "./Ratings";
+import CustomRating from "./CustomRating";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import ProductTabs from "./ProductTabs";
+import SmallProduct from "./SmallProduct";
+import "./ProductDetails.css"; // Import the CSS file
 
 const ProductDetails = () => {
   const { id: productId } = useParams();
@@ -36,6 +43,9 @@ const ProductDetails = () => {
     refetch,
     error,
   } = useGetProductDetailsQuery(productId);
+
+  const { data: relatedProducts, isLoading: loadingRelatedProducts } =
+    useGetTopProductsQuery();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -73,15 +83,10 @@ const ProductDetails = () => {
     ));
 
   return (
-    <>
-      <div>
-        <Link
-          to="/"
-          className="text-black font-semibold hover:underline ml-[10rem]"
-        >
-          Go Back
-        </Link>
-      </div>
+    <div className="container mx-auto mt-4 font-sans">
+      <Link to="/" className="text-gray-600 hover:text-gray-800 ml-4">
+        &larr; Go Back
+      </Link>
 
       {isLoading ? (
         <Loader />
@@ -91,70 +96,67 @@ const ProductDetails = () => {
         </Message>
       ) : (
         <>
-          <div className="flex flex-wrap relative items-between mt-[2rem] ml-[10rem]">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4 px-4">
+            <div className="lg:col-span-6 flex justify-center">
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem] rounded-lg"
+                className="max-w-full h-auto"
+                style={{ maxWidth: "400px", maxHeight: "400px" }}
               />
-
               <HeartIcon product={product} />
             </div>
 
-            <div className="flex flex-col justify-between">
-              <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
+            <div className="lg:col-span-3 flex flex-col">
+              <h1 className="text-2xl font-semibold mb-2">{product.name}</h1>
 
-              {/* Hiển thị mô tả đã được định dạng */}
-              <div className="text-black mb-4">{formattedDescription}</div>
-
-              <p className="text-5xl mb-4 font-extrabold text-red-600">
+              <p className="text-3xl mb-4 font-extrabold text-red-600">
                 {product.price} ₫
               </p>
 
-              <div className="flex justify-between items-center w-[20rem]">
-                <div className="one">
-                  <h1 className="flex items-center mb-4">
-                    <FaStore className="mr-2 text-black" /> Brand:{" "}
-                    {product.brand}
-                  </h1>
-                  <h1 className="flex items-center mb-4 w-[20rem]">
-                    <FaClock className="mr-2 text-black" /> Added:{" "}
-                    {moment(product.createAt).fromNow()}
-                  </h1>
-                  <h1 className="flex items-center mb-4">
-                    <FaStar className="mr-2 text-black" /> Reviews:{" "}
-                    {product.numReviews}
-                  </h1>
+              <div className="flex flex-col space-y-2">
+                <div className="flex items-center">
+                  <FaStore className="mr-2 text-black" />{" "}
+                  <span className="font-semibold">Brand:</span> {product.brand}
                 </div>
-
-                <div className="two">
-                  <h1 className="flex items-center mb-4">
-                    <FaStar className="mr-2 text-black" /> Ratings: {rating}
-                  </h1>
-                  <h1 className="flex items-center mb-4">
-                    <FaShoppingCart className="mr-2 text-black" /> Quantity:{" "}
-                    {product.quantity}
-                  </h1>
-                  <h1 className="flex items-center mb-4 w-[10rem]">
-                    <FaBox className="mr-2 text-black" /> In Stock:{" "}
-                    {product.countInStock}
-                  </h1>
+                <div className="flex items-center">
+                  <FaClock className="mr-2 text-black" />{" "}
+                  <span className="font-semibold">Added:</span>{" "}
+                  {moment(product.createAt).fromNow()}
+                </div>
+                <div className="flex items-center">
+                  <FaStar className="mr-2 text-black" />{" "}
+                  <span className="font-semibold">Reviews:</span>{" "}
+                  {product.numReviews}
+                </div>
+                <div className="flex items-center">
+                  <Ratings
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                  />
+                </div>
+                <div className="flex items-center">
+                  <FaShoppingCart className="mr-2 text-black" />{" "}
+                  <span className="font-semibold">Quantity:</span>{" "}
+                  {product.quantity}
+                </div>
+                <div className="flex items-center">
+                  <FaBox className="mr-2 text-black" />{" "}
+                  <span className="font-semibold">In Stock:</span>{" "}
+                  {product.countInStock}
                 </div>
               </div>
+            </div>
 
-              <div className="flex justify-between items-center">
-                <Ratings
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
-                />
-
+            <div className="lg:col-span-3 border p-5 rounded-lg shadow-lg">
+              <div className="text-center">
                 {product.countInStock > 0 && (
-                  <div>
+                  <div className="flex items-center my-4">
+                    <span className="mr-2">Số lượng:</span>
                     <select
                       value={qty}
                       onChange={(e) => setQty(e.target.value)}
-                      className="p-2 w-[6rem] rounded-lg text-black"
+                      className="p-2 border rounded-lg"
                     >
                       {[...Array(product.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
@@ -164,35 +166,128 @@ const ProductDetails = () => {
                     </select>
                   </div>
                 )}
-              </div>
-
-              <div className="btn-container mt-4">
                 <button
                   onClick={addToCartHandler}
+                  className="text-blue-400  border-2 border-blue-500 py-2 px-4 rounded-lg w-full mb-4 button-with-icon hover:bg-blue-600 transition duration-300 ease-in-out"
                   disabled={product.countInStock === 0}
-                  className="bg-blue-700 text-white py-2 px-4 rounded-lg"
                 >
-                  Add To Cart
+                  <FaCartPlus size={30} className="mr-2 text-blue-400" />
+                  Thêm vào giỏ hàng
+                </button>
+                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full mb-4 button-with-icon hover:bg-blue-600 transition duration-300 ease-in-out">
+                  <FaHeart size={30} className="mr-2" />
+                  Thêm vào danh sách yêu thích
+                </button>
+                <button className="text-blue-400  border-2 border-blue-500  py-2 px-4 rounded-lg w-full mb-4 button-with-icon hover:bg-blue-600 transition duration-300 ease-in-out">
+                  <FaDollarSign size={30} className="mr-4" />
+                  Mua ngay
                 </button>
               </div>
             </div>
+          </div>
 
-            <div className="mt-[5rem] container flex flex-wrap items-start justify-between ml-[10rem]">
-              <ProductTabs
-                loadingProductReview={loadingProductReview}
-                userInfo={userInfo}
-                submitHandler={submitHandler}
-                rating={rating}
-                setRating={setRating}
-                comment={comment}
-                setComment={setComment}
-                product={product}
-              />
+          <div className="mt-8 mx-4">
+            <h2 className="text-2xl font-semibold mb-4">Product Details</h2>
+            <div className="flex flex-col lg:flex-row lg:space-x-8">
+              <div className="w-full lg:w-2/3">
+                <p className="mb-4">
+                  <strong>Description: </strong>
+                  {formattedDescription}
+                </p>
+                <div className="border-t pt-4">
+                  <h3 className="text-xl font-semibold mb-2">Reviews</h3>
+                  {product.reviews.length === 0 && (
+                    <Message>No Reviews</Message>
+                  )}
+                  <ul>
+                    {product.reviews.map((review) => (
+                      <li key={review._id} className="mb-4 border-b pb-2">
+                        <div className="flex items-center mb-2">
+                          <strong>{review.name}</strong>
+                          <div className="ml-4">
+                            <Ratings value={review.rating} />
+                          </div>
+                          <span className="ml-4 text-gray-600">
+                            {moment(review.createdAt).format("LL")}
+                          </span>
+                        </div>
+                        <p>{review.comment}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="hidden lg:block lg:w-1/3">
+                <div className="mt-4">
+                  <h3 className="text-xl font-semibold mb-2">
+                    Write a Customer Review
+                  </h3>
+                  {userInfo ? (
+                    <form onSubmit={submitHandler}>
+                      <div className="mb-4">
+                        <label htmlFor="rating" className="block mb-2">
+                          Rating
+                        </label>
+                        <CustomRating
+                          name="rating"
+                          value={rating}
+                          onChange={(e, newValue) => setRating(newValue)}
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="comment" className="block mb-2">
+                          Comment
+                        </label>
+                        <textarea
+                          id="comment"
+                          rows="4"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          className="p-2 border rounded-lg w-full"
+                        ></textarea>
+                      </div>
+                      <button
+                        type="submit"
+                        className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+                        disabled={loadingProductReview}
+                      >
+                        Submit
+                      </button>
+                    </form>
+                  ) : (
+                    <Message>
+                      Please <Link to="/login">sign in</Link> to write a review
+                    </Message>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 mx-4 ">
+            <h2 className="text-2xl font-semibold mb-4">
+              Những sản phẩm tương tự
+            </h2>
+            <div className="border border-gray-200 p-4 rounded-lg">
+              <div className="flex flex-wrap -mx-4">
+                {loadingRelatedProducts ? (
+                  <Loader />
+                ) : (
+                  relatedProducts.map((relatedProduct) => (
+                    <div
+                      key={relatedProduct._id}
+                      className="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8"
+                    >
+                      <SmallProduct product={relatedProduct} />
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

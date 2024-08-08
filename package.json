@@ -8,9 +8,7 @@
     "backend": "nodemon backend/index.js",
     "frontend": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
-    "build": "npm run build --prefix frontend",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "npm run build --prefix frontend"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -20,6 +18,10 @@
   "author": "Tran Chi Phuc",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.16.4",
+    "@mui/material": "^5.16.4",
     "@payos/node": "^1.0.6",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
@@ -37,7 +39,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
     "react-redux": "^9.1.2",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.5",
-    "react-scripts": "^5.0.1"
+    "styled-components": "^6.1.12"
   }
 }

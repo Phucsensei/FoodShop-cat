@@ -1,16 +1,60 @@
 import { useState, useEffect } from "react";
 import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
-import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import {
+  AiOutlineSearch,
+  AiOutlineShoppingCart,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import { useSelector } from "react-redux";
 import styles from "../styles/styles";
-import "../styles.css"; // Đảm bảo bạn đã import file CSS
+import "../styles.css"; // Ensure you have imported the CSS file
+import Footer from "./footer";
+
+const CartDropdown = () => {
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  return (
+    <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+      {cartItems.length === 0 ? (
+        <div className="p-4">Your cart is empty</div>
+      ) : (
+        <div className="p-4">
+          {cartItems.map((item) => (
+            <div key={item._id} className="flex items-center mb-4">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-12 h-12 rounded-md"
+              />
+              <div className="ml-4">
+                <Link to={`/product/${item._id}`} className="text-black">
+                  {item.name}
+                </Link>
+                <div className="text-sm text-gray-500">
+                  {item.qty} x {item.price}₫
+                </div>
+              </div>
+            </div>
+          ))}
+          <Link to="/cart" className="text-blue-500 hover:underline">
+            View Cart
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth); // Get user info from Redux store
 
-  const { data, isLoading, error } = useGetTopProductsQuery();
+  const { data } = useGetTopProductsQuery();
 
   useEffect(() => {
     if (data) {
@@ -28,20 +72,20 @@ const Header = () => {
   return (
     <>
       <header className="bg-white shadow-md">
-        <div className="flex justify-between items-center max-w-6xl mx-auto p-5">
-          <Link to="/">
-            <div className="w-48 mr-20">
+        <div className="flex justify-between items-center max-w-8xl mx-auto p-5">
+          <div className="flex items-center space-x-4">
+            <Link to="/">
               <img
-                className="mr-16"
+                className="w-48"
                 src="uploads/420242990_375013125221320_4244492130705290905_n.png"
                 alt="Logo"
               />
-            </div>
-          </Link>
-          <div className="w-[50%] relative">
+            </Link>
+          </div>
+          <div className="flex-grow mx-10 relative">
             <input
               type="text"
-              placeholder="Search Product..."
+              placeholder="Tìm kiếm thông tin tại đây"
               value={searchTerm}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-rose-400 border-[2px] rounded-md focus:outline-none focus:border-rose-400"
@@ -75,58 +119,44 @@ const Header = () => {
               </div>
             )}
           </div>
-          <div className={`${styles.button} ml-3 bg-rose-400`}>
-            <Link
-              to="/user-order"
-              className="flex items-center text-white hover:text-rose-200"
-            >
-              <h1
-                className="uppercase"
+          <div className="flex items-center space-x-4">
+            <div className={`${styles.button} bg-rose-400`}>
+              <Link
+                to="/user-order"
+                className="flex items-center text-white hover:text-rose-200"
+              >
+                <h1
+                  className="uppercase"
+                  style={{ fontFamily: "'Roboto', sans-serif" }}
+                >
+                  My Order
+                </h1>
+                <IoIosArrowForward className="ml-1" />
+              </Link>
+            </div>
+            {userInfo ? (
+              <button className="flex items-center space-x-2">
+                <AiOutlineUser className="text-gray-800" size={25} />
+                <span
+                  className="text-gray-800"
+                  style={{ fontFamily: "'Roboto', sans-serif" }}
+                >
+                  {userInfo.username}
+                </span>
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="text-gray-800 hover:text-rose-400"
                 style={{ fontFamily: "'Roboto', sans-serif" }}
               >
-                My Order
-              </h1>
-              <IoIosArrowForward className="ml-1" />
-            </Link>
+                Login
+              </Link>
+            )}
           </div>
-          <Link to="/cart">
-            <button className="p-2 rounded-full bg-rose-400 hover:bg-gray-300">
-              <AiOutlineShoppingCart size={25} className="text-white" />
-            </button>
-          </Link>
         </div>
       </header>
       <div>
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto text-center">
-            <div className="circular-animation-container">
-              <h1
-                className="circular-animation text-rose-400 font-bold text-3xl lg:text-6xl"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
-                Pet shop HappiPaws
-              </h1>
-            </div>
-            <div
-              className="text-gray-500 text-xs sm:text-base"
-              style={{ fontFamily: "'Roboto', sans-serif" }}
-            >
-              HappiPaws là cửa hàng thú cưng với đa dạng sản phẩm, từ thức ăn
-              hạt đến phụ kiện và súp thưởng, …. Chúng tôi cung cấp hộp quà bí
-              ẩn đặc biệt và tính toán calo dành cho thú cưng trên website.
-              <br />
-              Hãy đến với chúng tôi để tận hưởng trải nghiệm mua sắm thú vị và
-              chăm sóc thú cưng một cách thông minh!
-            </div>
-            <Link
-              to="/shop"
-              className="text-xs sm:text-xl text-rose-400 font-bold hover:underline"
-              style={{ fontFamily: "'Roboto', sans-serif" }}
-            >
-              Let's get started...
-            </Link>
-          </div>
-        </div>
         <div>
           <div className="image-container relative w-full">
             <Link to="/">
@@ -190,6 +220,59 @@ const Header = () => {
               <div className="text">
                 <h3 className="text-xl font-semibold">Hỗ trợ miễn phí 24/7</h3>
                 <p>Online 24hrs a Day</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mx-auto px-4 py-8">
+          <div className="flex flex-col lg:flex-row gap-8 bg-white rounded-lg shadow-lg p-8">
+            <div className="flex-1 border border-gray-300 rounded-lg p-4">
+              <h2
+                className="text-3xl font-semibold mb-4"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                HỆ THỐNG SHOP CỬA HÀNG THÚ CƯNG{" "}
+                <span className="text-rose-400">HAPPI PAWS</span>
+              </h2>
+              <p
+                className="mb-4"
+                style={{ fontFamily: "'Roboto', sans-serif" }}
+              >
+                <a href="#" className="text-rose-400 hover:underline text-lg">
+                  HAPPI PAWS
+                </a>{" "}
+                là chuỗi pet shop thú cưng –
+                <a href="#" className="text-rose-400 hover:underline">
+                  {" "}
+                  Đồ cho mèo
+                </a>{" "}
+                tại Thành phố Hồ Chí Minh, Hà Nội, Đà Nẵng và Hải Phòng với hệ
+                thống nhiều chi nhánh cửa hàng thú cưng chuyên cung cấp vật
+                dụng, quần áo, thức ăn, sữa tắm, chuồng, vòng cổ xích và các phụ
+                kiện dành cho vật nuôi cảnh...
+              </p>
+              <p
+                className="mb-4"
+                style={{ fontFamily: "'Roboto', sans-serif" }}
+              >
+                Là điểm đến hàng đầu tại Việt Nam chuyên cung cấp các dịch vụ
+                tắm spa, chăm sóc, cắt tỉa lông và trông giữ thú cưng chuyên
+                nghiệp. Với chất lượng dịch vụ tốt nhất luôn được khách hàng tin
+                tưởng và đánh giá cao.
+              </p>
+            </div>
+            <div className="flex-1 border border-gray-300 rounded-lg p-4">
+              <div className="aspect-w-16 aspect-h-9">
+                <iframe
+                  width="100%"
+                  height="400"
+                  src="https://www.youtube.com/embed/9qvh_CSAFJw?si=yKXFfEqNkCA4X6zn"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
               </div>
             </div>
           </div>

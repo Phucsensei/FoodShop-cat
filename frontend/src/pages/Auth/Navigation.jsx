@@ -5,17 +5,16 @@ import {
   AiOutlineLogin,
   AiOutlineUserAdd,
   AiOutlineShoppingCart,
+  AiOutlineUser,
 } from "react-icons/ai";
-import { FaHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import "./Navigation.css";
+import { FaHeart, FaBlog, FaCalculator } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
-import { FaBlog } from "react-icons/fa";
-import { FaCalculator } from "react-icons/fa";
+import "./Navigation.css";
+
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
@@ -54,21 +53,36 @@ const Navigation = () => {
         <Link to="/" className="flex relative">
           <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
             <AiOutlineHome className="mt-[3rem] mr-2" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">Home</span>{" "}
+            <span
+              className="hidden nav-item-name mt-[3rem]"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              Home
+            </span>{" "}
           </div>
         </Link>
 
         <Link to="/shop" className="flex relative">
           <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
             <AiOutlineShopping className="mt-[3rem] mr-2" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">Shop</span>{" "}
+            <span
+              className="hidden nav-item-name mt-[3rem]"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              Shop
+            </span>{" "}
           </div>
         </Link>
 
         <Link to="/cart" className="flex relative">
           <div className="flex items-center transition-transform transform hover:translate-x-2">
             <AiOutlineShoppingCart className="mt-[3rem] mr-2" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">Cart</span>{" "}
+            <span
+              className="hidden nav-item-name mt-[3rem]"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              Cart
+            </span>{" "}
           </div>
 
           <div className="absolute top-9">
@@ -85,7 +99,10 @@ const Navigation = () => {
         <Link to="/favorite" className="flex relative">
           <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
             <FaHeart className="mt-[3rem] mr-2" size={20} />
-            <span className="hidden nav-item-name mt-[3rem]">
+            <span
+              className="hidden nav-item-name mt-[3rem]"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
               Favorites
             </span>{" "}
             <FavoritesCount />
@@ -95,14 +112,22 @@ const Navigation = () => {
         <Link to="/blog" className="flex relative">
           <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
             <FaBlog className="mt-[3rem] mr-2" size={20} />
-            <span className="hidden nav-item-name mt-[3rem]">BLOG</span>{" "}
+            <span
+              className="hidden nav-item-name mt-[3rem]"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              BLOG
+            </span>{" "}
           </div>
         </Link>
 
         <Link to="/calo" className="flex relative">
           <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
             <FaCalculator className="mt-[3rem] mr-2" size={20} />
-            <span className="hidden nav-item-name mt-[3rem]">
+            <span
+              className="hidden nav-item-name mt-[3rem]"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
               Calculator
             </span>{" "}
           </div>
@@ -114,27 +139,7 @@ const Navigation = () => {
           onClick={toggleDropdown}
           className="flex items-center text-gray-800 focus:outline-none"
         >
-          {userInfo && (
-            <span className="text-white mr-1">{userInfo.username}</span>
-          )}
-          {userInfo && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 ${
-                dropdownOpen ? "transform rotate-180" : ""
-              }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="white"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={dropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
-              />
-            </svg>
-          )}
+          {userInfo && <AiOutlineUser className="text-white" size={26} />}
         </button>
 
         {dropdownOpen && userInfo && (
@@ -143,6 +148,15 @@ const Navigation = () => {
               !userInfo.isAdmin ? "-top-20" : "-top-80"
             }`}
           >
+            <li className="flex items-center px-4 py-2">
+              <AiOutlineUser className="mr-2" size={20} />
+              <span
+                className="text-gray-800"
+                style={{ fontFamily: "'Roboto', sans-serif" }}
+              >
+                {userInfo.username}
+              </span>
+            </li>
             {userInfo.isAdmin && (
               <>
                 <li>
@@ -209,7 +223,9 @@ const Navigation = () => {
               <Link to="/login" className="block px-4 py-2 hover:bg-gray-100">
                 <span className="flex items-center">
                   <AiOutlineLogin className="mr-2" size={20} />
-                  <span>Login</span>
+                  <span style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Login
+                  </span>
                 </span>
               </Link>
             </li>
@@ -220,7 +236,9 @@ const Navigation = () => {
               >
                 <span className="flex items-center">
                   <AiOutlineUserAdd className="mr-2" size={20} />
-                  <span>Register</span>
+                  <span style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Register
+                  </span>
                 </span>
               </Link>
             </li>

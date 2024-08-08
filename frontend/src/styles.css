@@ -8,12 +8,36 @@
         }
     } */
 
+
+    
 .circular-animation-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 300px;
     /* Chiều cao của container để đảm bảo có đủ không gian cho vòng tròn */
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-10px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(10px);
+    }
+}
+
+.shake {
+    animation: shake 0.5s;
 }
 
 .circular-animation {
